@@ -3,7 +3,8 @@
     "json-server": "json-server --watch db.json --port 3003",
     "dev": "ts-node-dev --respawn --transpile-only server.ts",
     "typeorm": "env-cmd ts-node-dev node_modules/.bin/typeorm -d src/database/dataSource.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "node build/server.js"
   },
   "dependencies": {
     "@sentry/node": "^7.49.0",
