@@ -8,7 +8,7 @@ export class CrudController<T> {
     this.service = repository;
   }
 
-  get = async (req: Request, res: Response) => {
+  async get(req: Request, res: Response) {
     try {
       const entities = await this.service.get();
       res.json(entities);
@@ -18,9 +18,9 @@ export class CrudController<T> {
         .status(500)
         .json({ message: "Error while getting entities from database" });
     }
-  };
+  }
 
-  create = async (req: Request, res: Response) => {
+  async create(req: Request, res: Response) {
     try {
       const entity = await this.service.create(req.body);
       res.json(entity);
@@ -33,9 +33,9 @@ export class CrudController<T> {
         .status(500)
         .json({ message: "Error while storing entity in database" });
     }
-  };
+  }
 
-  update = async (req: Request, res: Response) => {
+  async update(req: Request, res: Response) {
     try {
       const { id } = req.params;
       const entity = await this.service.update(id, req.body);
@@ -49,9 +49,9 @@ export class CrudController<T> {
           .json({ message: "Error while updating entity in database" });
       }
     }
-  };
+  }
 
-  delete = async (req: Request, res: Response) => {
+  async delete(req: Request, res: Response) {
     try {
       const { id } = req.params;
       const success = await this.service.delete(id);
@@ -66,5 +66,5 @@ export class CrudController<T> {
           .json({ message: "Error while deleting entity from database" });
       }
     }
-  };
+  }
 }
