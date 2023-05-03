@@ -2,19 +2,19 @@ import { AppDataSource } from "../database";
 import { CrewDTO } from "../interfaces/crew";
 import { CrewManDTO } from "../interfaces/crewMan";
 import { RocketDTO } from "../interfaces/rocket";
-import { CrudRepository } from "./CrudRepository";
-import { LaunchRepository } from "./LaunchRepository";
+import { makeCrudRepository } from "./CrudRepository";
+import { makeLaunchRepository } from "./LaunchRepository";
 
-export const rocketRepository = new CrudRepository<RocketDTO>(
+export const rocketRepository = makeCrudRepository<RocketDTO>(
   AppDataSource.getRepository("Rocket")
 );
-export const launchRepository = new LaunchRepository(
+export const launchRepository = makeLaunchRepository(
   AppDataSource.getRepository("Launch")
 );
 
-export const crewRepository = new CrudRepository<CrewDTO>(
+export const crewRepository = makeCrudRepository<CrewDTO>(
   AppDataSource.getRepository("Crew")
 );
-export const crewManRepository = new CrudRepository<CrewManDTO>(
+export const crewManRepository = makeCrudRepository<CrewManDTO>(
   AppDataSource.getRepository("CrewMan")
 );

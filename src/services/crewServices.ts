@@ -3,8 +3,8 @@ import { CrudService } from "./CrudService";
 
 export class CrewService extends CrudService<CrewDTO> {
   async get(): Promise<CrewDTO[]> {
-    return await this.repository.findByField({
+    return await this.repository.findAll({
       relations: ["crewMans"],
-    } as any);
+    });
   }
 }

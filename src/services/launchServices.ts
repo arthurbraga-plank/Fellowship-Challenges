@@ -37,9 +37,9 @@ export class LaunchService extends CrudService<LaunchDTO, CreateLaunchDTO> {
   }
 
   async get(): Promise<LaunchDTO[]> {
-    const launches = await launchRepository.findByField({
+    const launches = await launchRepository.findAll({
       relations: ["rocket"],
-    } as any);
+    });
     return launches;
   }
 }
