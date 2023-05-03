@@ -1,11 +1,10 @@
-import { Rocket } from "../models/rocket";
 import * as repositories from "../repositories";
 import { CrewManService } from "./crewmanService";
 import { CrewService } from "./crewServices";
-import { CrudService } from "./genericService";
+import { CrudService } from "./CrudService";
 import { LaunchService } from "./launchServices";
 
-export const rocketService = new CrudService<Rocket>(
+export const rocketService = new CrudService(
   repositories.rocketRepository
 );
 export const launchService = new LaunchService(repositories.launchRepository);

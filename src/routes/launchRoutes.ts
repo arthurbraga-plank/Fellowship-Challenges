@@ -1,13 +1,11 @@
 import { Router } from "express";
 
+import { launchController } from "../controllers";
 import {
   createLaunchValidator,
   updateLaunchValidator,
 } from "../validators/launchValidator";
-import { CrudController } from "../controllers/genericController";
-import { launchService } from "../services";
 
-const launchController = new CrudController(launchService)
 const launchRoutes = Router();
 
 launchRoutes

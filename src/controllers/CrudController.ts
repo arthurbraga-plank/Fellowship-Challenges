@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
-import { CrudService } from "../services/genericService";
+import { CrudService } from "../services/CrudService";
 
-export class CrudController<T> {
-  private service: CrudService<T>;
+export class CrudController<BaseEntity, CreateDTO = BaseEntity> {
+  protected service: CrudService<BaseEntity, CreateDTO>;
 
-  constructor(repository: CrudService<T>) {
-    this.service = repository;
+  constructor(service: CrudService<BaseEntity, CreateDTO>) {
+    console.log("CrudController constructor", service, this);
+    this.service = service;
+    console.log("CrudController constructor", service, this);
   }
 
   async get(req: Request, res: Response) {
@@ -22,7 +24,9 @@ export class CrudController<T> {
 
   async create(req: Request, res: Response) {
     try {
-      const entity = await this.service.create(req.body);
+      const payload = req.body;
+      const entity = await this.service.create(payload);
+
       res.json(entity);
     } catch (err: any) {
       if (err?.message === "Rocket not found")

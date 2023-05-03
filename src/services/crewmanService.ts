@@ -1,9 +1,9 @@
-import { CrewMan } from "../models/crewMan";
-import { CrudService } from "./genericService";
+import { CrewManDTO } from "../interfaces/crewMan";
+import { CrudService } from "./CrudService";
 
-export class CrewManService extends CrudService<CrewMan> {
-  async get(): Promise<CrewMan[]> {
-    return await this.repository.get({
+export class CrewManService extends CrudService<CrewManDTO> {
+  async get(): Promise<CrewManDTO[]> {
+    return await this.repository.findByField({
       relations: ["crews"],
     } as any);
   }

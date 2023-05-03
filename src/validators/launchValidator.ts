@@ -1,20 +1,22 @@
 import { Joi, Segments, celebrate } from "celebrate";
-import { Launch } from "../models/launch";
+import { CreateLaunchDTO } from "../interfaces/launch";
 
 export const createLaunchValidator = celebrate({
-  [Segments.BODY]: Joi.object<Launch>().keys({
+  [Segments.BODY]: Joi.object<CreateLaunchDTO>().keys({
     launchCode: Joi.string().required(),
     date: Joi.string().required(),
     success: Joi.boolean().required(),
-    rocket: Joi.number().required(),
+    rocketId: Joi.number().required(),
+    crewId: Joi.number(),
   }),
 });
 
 export const updateLaunchValidator = celebrate({
-  [Segments.BODY]: Joi.object<Launch>().keys({
+  [Segments.BODY]: Joi.object<CreateLaunchDTO>().keys({
     launchCode: Joi.string(),
     date: Joi.string(),
     success: Joi.boolean(),
-    rocket: Joi.number().required(),
+    rocketId: Joi.number(),
+    crewId: Joi.number(),
   }),
 });

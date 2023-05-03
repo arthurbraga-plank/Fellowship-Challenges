@@ -1,33 +1,43 @@
+import { CreateLaunchDTO, LaunchDTO } from "../interfaces/launch";
 import { Launch } from "../models/launch";
-import { launchRepository, rocketRepository } from "../repositories";
-import { CrudService } from "./genericService";
+import {
+  crewRepository,
+  launchRepository,
+  rocketRepository,
+} from "../repositories";
+import { CrudService } from "./CrudService";
 
-export class LaunchService extends CrudService<Launch> {
-  async create(payload: Omit<Launch, "id">): Promise<Launch> {
-    const { id: rocketId } = payload.rocket;
-    const foundRocket = await rocketRepository.get({ id: rocketId });
+export class LaunchService extends CrudService<LaunchDTO, CreateLaunchDTO> {
+  async create(payload: CreateLaunchDTO): Promise<LaunchDTO> {
+    const { rocketId, crewId } = payload;
 
+    const foundRocket = await rocketRepository.findByField({ id: rocketId });
     if (!foundRocket.length) throw new Error("Rocket not found");
 
-    const launch = await launchRepository.create(payload);
-    return launch;
+    if (crewId) {
+      const foundCrew = await crewRepository.findByField({ id: crewId });
+      if (!foundCrew.length) throw new Error("Crew not found");
+    }
+
+
+    return await launchRepository.create(payload);
   }
 
   async update(
     id: string,
     payload: Partial<Omit<Launch, "id">>
-  ): Promise<Launch> {
+  ): Promise<LaunchDTO> {
     const { id: rocketId } = payload.rocket;
-    const foundRocket = await rocketRepository.get({ id: rocketId });
+    const foundRocket = await rocketRepository.findByField({ id: rocketId });
 
     if (!foundRocket.length) throw new Error("Rocket not found");
 
-    const launch = await launchRepository.update(id, payload);
+    const launch = await launchRepository.updateById(id, payload);
     return launch;
   }
 
-  async get(): Promise<Launch[]> {
-    const launches = await launchRepository.get({
+  async get(): Promise<LaunchDTO[]> {
+    const launches = await launchRepository.findByField({
       relations: ["rocket"],
     } as any);
     return launches;

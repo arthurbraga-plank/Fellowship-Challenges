@@ -1,32 +1,29 @@
 import { Router } from "express";
-import { CrudController } from "../controllers/genericController";
+import { crewController, crewManController, rocketController } from "../controllers";
+import { CrudController } from "../controllers/CrudController";
 import { launchRoutes } from "./launchRoutes";
-import * as services from "../services";
-import { CrudService } from "../services/genericService";
 
-const createRoute = <T>(path: string, service: CrudService<T>) => {
+const createRoute = <T, U>(path: string, controller: CrudController<T, U>) => {
   const crudRouter = Router();
-
-  const entityController = new CrudController(service);
 
   crudRouter
     .route(`/${path}`)
-    .get(entityController.get)
-    .post(entityController.create);
+    .get(controller.get)
+    .post(controller.create);
 
   crudRouter
     .route(`/${path}/:id`)
-    .put(entityController.update)
-    .delete(entityController.delete);
+    .put(controller.update)
+    .delete(controller.delete);
 
   return crudRouter;
 };
 
 const router = Router();
 
-router.use(createRoute("rocket", services.rocketService));
-router.use(createRoute("crewman", services.crewManService));
-router.use(createRoute("crew", services.crewService));
-router.use(launchRoutes)
+router.use(createRoute("rocket", rocketController));
+router.use(createRoute("crewman", crewManController));
+router.use(createRoute("crew", crewController));
+router.use(launchRoutes);
 
 export { router };
