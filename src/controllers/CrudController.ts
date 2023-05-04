@@ -5,12 +5,10 @@ export class CrudController<BaseEntity, CreateDTO = BaseEntity> {
   protected service: CrudService<BaseEntity, CreateDTO>;
 
   constructor(service: CrudService<BaseEntity, CreateDTO>) {
-    console.log("CrudController constructor", service, this);
     this.service = service;
-    console.log("CrudController constructor", service, this);
   }
 
-  async get(req: Request, res: Response) {
+  get = async (req: Request, res: Response) => {
     try {
       const entities = await this.service.get();
       res.json(entities);
@@ -22,7 +20,7 @@ export class CrudController<BaseEntity, CreateDTO = BaseEntity> {
     }
   }
 
-  async create(req: Request, res: Response) {
+  create = async (req: Request, res: Response) => {
     try {
       const payload = req.body;
       const entity = await this.service.create(payload);
@@ -39,10 +37,10 @@ export class CrudController<BaseEntity, CreateDTO = BaseEntity> {
     }
   }
 
-  async update(req: Request, res: Response) {
+  update = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const entity = await this.service.update(id, req.body);
+      const entity = await this.service.update(Number(id), req.body);
       res.json(entity);
     } catch (err: any) {
       if (err?.response?.status === 404) {
@@ -55,10 +53,10 @@ export class CrudController<BaseEntity, CreateDTO = BaseEntity> {
     }
   }
 
-  async delete(req: Request, res: Response) {
+  delete = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const success = await this.service.delete(id);
+      const success = await this.service.delete(Number(id));
       res.json(success);
     } catch (err: any) {
       if (err?.response?.status === 404) {

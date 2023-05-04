@@ -24,7 +24,7 @@ export class LaunchService extends CrudService<LaunchDTO, CreateLaunchDTO> {
   }
 
   async update(
-    id: string,
+    id: number,
     payload: Partial<Omit<Launch, "id">>
   ): Promise<LaunchDTO> {
     const { id: rocketId } = payload.rocket;

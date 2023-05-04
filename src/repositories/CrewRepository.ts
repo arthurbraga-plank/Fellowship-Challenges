@@ -7,7 +7,6 @@ export function makeCrewRepository(
 ): ICrudRepository<CrewDTO, CreateCrewDTO> {
   return {
     ...makeCrudRepository(repository),
-    
     create: (payload) => {
       const { crewManIds, ...rest } = payload;
       const crew = {

@@ -28,12 +28,14 @@ export function makeCrudRepository<BaseEntity>(
   return {
     findByField: (fields, config) => {
       const { relations } = config ?? {};
-      return repository.findBy({ ...fields, relations } as any);
+      return repository.find({ ...fields, relations });
     },
+
     create: (payload) => {
       const created = repository.create(payload);
       return repository.save(created);
     },
+
     updateById: async (id, entity) => {
       //TODO:
       const data = await repository.findOneBy({
@@ -44,6 +46,7 @@ export function makeCrudRepository<BaseEntity>(
       const updated = repository.merge(data, entity as any);
       return repository.save(updated);
     },
+
     deleteById: async (id) => {
       //TODO:
       const entity = await repository.findOneBy({ id } as any);
@@ -51,47 +54,14 @@ export function makeCrudRepository<BaseEntity>(
       await repository.delete({ id } as any);
       return true;
     },
+
     findAll: (options) => {
       const { relations } = options ?? {};
       return repository.find({ relations });
     },
+    
     findByIds: (ids) => {
       return repository.findBy({ id: In(ids) } as any);
     },
   };
 }
-
-// type TypeA = {
-//   name: string;
-//   age: number;
-// };
-
-// type TypeB = {
-//   height: number;
-//   weight: number;
-// };
-
-// interface Interface1 {
-//   fun: (data: TypeA) => void;
-//   fun1: (data: TypeA, data2: TypeB) => void;
-// }
-
-// class Test1 implements Interface1 {
-//   fun(data: TypeA) {
-//     throw new Error("Method not implemented.");
-//   }
-//   fun1(data: TypeA, data2: TypeB) {
-//     throw new Error("Method not implemented.");
-//   }
-// }
-
-// interface Interface2 {
-//   fun: (data: TypeB) => void;
-//   fun1: (data: TypeA, data2: TypeB) => void;
-// }
-
-// class Test2 extends Test1 implements Interface2 {
-//   fun(data: TypeB) {
-//     throw new Error("Method not implemented.");
-//   }
-// }

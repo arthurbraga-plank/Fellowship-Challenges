@@ -15,8 +15,8 @@ export function makeLaunchRepository(
         crew: crewId,
       };
 
-      const created = this.repository.create(launch);
-      return this.repository.save(created);
+      const created = repository.create(launch);
+      return repository.save(created);
     },
   };
 }

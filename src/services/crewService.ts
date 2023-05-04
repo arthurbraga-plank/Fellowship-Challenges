@@ -13,7 +13,7 @@ export class CrewService extends CrudService<CrewDTO, CreateCrewDTO> {
   }
   async get(filter?: Partial<CrewDTO>): Promise<CrewDTO[]> {
     return await this.repository.findByField(filter, {
-      relations: ["crewmen"],
+      relations: ["crewMans"],
     });
   }
 }
