@@ -2,10 +2,10 @@ import { ICrudRepository } from "../repositories/CrudRepository";
 
 export interface ICrudService<BaseEntity, CreateDTO> {
   get(filter?: Partial<BaseEntity>): Promise<BaseEntity[]>;
-  delete(id: string): Promise<boolean>;
+  delete(id: number): Promise<boolean>;
   create(payload: CreateDTO): Promise<BaseEntity>;
   update(
-    id: string,
+    id: number,
     payload: Partial<Omit<BaseEntity, "id">>
   ): Promise<BaseEntity>;
 }
@@ -24,7 +24,7 @@ export class CrudService<BaseEntity, CreateDTO = BaseEntity>
     return entities;
   }
 
-  async delete(id: string): Promise<boolean> {
+  async delete(id: number): Promise<boolean> {
     const entity = await this.repository.deleteById(id);
     return entity;
   }
@@ -35,7 +35,7 @@ export class CrudService<BaseEntity, CreateDTO = BaseEntity>
   }
 
   async update(
-    id: string,
+    id: number,
     payload: Partial<Omit<BaseEntity, "id">>
   ): Promise<BaseEntity> {
     const entity = await this.repository.updateById(id, payload);

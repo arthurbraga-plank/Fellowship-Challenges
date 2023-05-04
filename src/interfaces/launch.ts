@@ -1,5 +1,3 @@
-import { RocketDTO } from "./rocket";
-
 export interface LaunchDTO {
   id: number;
   launchCode: string;
